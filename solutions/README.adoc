@@ -1,0 +1,10 @@
+= Software Solutions
+
+This directory contains the *source code* for the software solutions (Mule apps, ...) that are part of this material.
+There is a CI pipeline implemented as a GitHub Actions workflow that builds and packages this source code into deployable archives and ... (TODO describe).
+
+== Build
+
+. Run link:etc/create-settings-xml-from-template.sh[] to create `etc/settings.xml` from link:etc/settings.xml.template[] and the credentials missing in the latter.
+. Get the encryption key for secure/encrypted properties files (if required).
+. Run link:build.sh[], supplying the encryption key on the command-line (if required).

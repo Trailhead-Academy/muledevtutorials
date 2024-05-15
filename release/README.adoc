@@ -1,0 +1,4 @@
+= Release Automation
+
+Scripts and assets that form the basis of automating the release of this material.
+These scripts are triggered by the GitHub Actions workflows for release automation.

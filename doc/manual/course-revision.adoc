@@ -1,0 +1,25 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+//
+// AsciiDoc attributes capturing the revision (version) of all course material (and importantly the Manual and GitHub repo)
+// IMPORTANT: no empty lines in this file!
+//
+// standard attributes
+:revdate: 2020-05-27
+// revremark identifies the course revision, which can either be a SNAPSHOT revision or a non-SNAPSHOT (published) release
+// SNAPSHOT revisions:    for example 2.3-SNAPSHOT , the associated GitHub repo state is the head of the master branch (we are using trunk-based development)
+// non-SNAPSHOT releases: for example 2.3          , the associated GitHub repo state is a tag off the master branch with the exact same name as {revremark}
+:revremark: 1.4-SNAPSHOT
+//
+// identify the branch or tag (commonly called refs in Git) of the GitHub repo for this revision of the course
+// either set to master if revremark above is a SNAPSHOT revision, i.e., this revision is in active development
+:GitHubRef: master
+// or set to {revremark} if revremark above is a non-SNAPSHOT release, i.e., this release is in the process of being published
+//:GitHubRef: {revremark}
+//
+// course title
+:Course: REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL
+:CourseAbbr: REPL_OfficialAbbrev_REPL

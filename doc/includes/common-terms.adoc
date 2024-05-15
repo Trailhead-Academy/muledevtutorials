@@ -1,0 +1,412 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+//
+// Common terms as AsciiDoc attributes
+//
+// training-related
+:TODO: pass:q[*_TODO_*]
+// course structure
+:UNDER: Understanding
+// definition of term or concept
+:DEF: Defining
+// general introduction, independent of case study
+:INTRO: Introducing
+// walkthroughs (WTs)
+:WT: walkthrough
+:WTs: walkthroughs
+:WT-c: Walkthrough
+:HW: Homework:
+// solution to an exercise
+:SOL: Solution
+// short summary, suitable for slides
+:SUM: Summary
+// course objectives, can be seen as Job Tasks (JTs)
+:COBJ: At the end of this course, you should be able to:
+// module objectives, can be seen as Job Tasks (JTs)
+:MOBJ: At the end of this module, you should be able to:
+:InThisMYou: In this module, you
+// WT objectives, can be seen as Job Tasks (JTs)
+:WTOBJ: At the end of this {WT}, you should be able to
+:InThisWTYou: In this walkthrough, you
+:InThisWTSecYou: In this section, you
+:InThisWTSecTheInstructor: In this section, the instructor
+:YouWill: You will:
+:YouSeeSol: You can see the end state of following this {WT} at
+:YouNeedStarter: To follow this {WT} you need the starter project at
+:Note: pass:q[_Note:_]
+:OPT: Optional:
+:INST: Instructor:
+:THINK: Reflect:
+:RUN: Run:
+:BUILD: Maven-build:
+:BUILDDEPLOY: Maven-deploy:
+:INV: Invoke:
+:RUNINV: Run and invoke:
+:WAIT: Wait and observe:
+:CHECKLOG: Check log:
+:RUNINVLOG: Run, invoke, and check log:
+:RUNMUNIT: MUnit-test:
+:RUNMUNITLOG: MUnit-test and check log:
+:HWExtractProps: pass:q[*Homework:* *Extract config props:* Extract all hard-coded configuration values, for all supported environments, into appropriate configuration properties - environment-dependent and/or -environment-independent, encrytped and/or cleartext, as appropriate.]
+
+// technology-related
+
+:MS: MuleSoft
+:C4E: C4E
+:KPI: KPI
+:KPIs: KPIs
+:Aled: API-led connectivity
+:Aled-cc: API-Led Connectivity
+:EDA: Event-Driven Architecture
+:AN: application network
+:AN-c: Application network
+:AN-cc: Application Network
+:ANs: application networks
+:ANs-c: Application networks
+:BA: Business Architecture
+:AA: Application Architecture
+:TA: Technology Architecture
+:EA: Enterprise Architecture
+:SA: Solution Architecture
+:SVC: service
+:SVC-c: Service
+:SVCs: services
+:SVCs-c: Services
+:INTF: interface
+:INTF-c: Interface
+:INTFs: interfaces
+:INTFs-c: Interfaces
+:API: API
+:APIs: APIs
+:APISpec: API specification
+:APISpecs: API specifications
+:APII: API implementation
+:APIIs: API implementations
+:APIIs-cc: API Implementations
+:APIInst: API instance
+:APIInsts: API instances
+:APIID: API ID
+:APIIDs: API IDs
+:APIProv: API provider
+:APIProvs: API providers
+:APIC: API client
+:APICs: API clients
+:APICon: API consumer
+:APICons: API consumers
+:APIInv: API invocation
+:APIInvs: API invocations
+:APIInvs-cc: API Invocations
+:SAPI: System API
+:SAPIs: System APIs
+:PAPI: Process API
+:PAPIs: Process APIs
+:EAPI: Experience API
+:EAPIs: Experience APIs
+:SLA: SLA
+:SLAs: SLAs
+:SLAT: SLA tier
+:SLATs: SLA tiers
+:QoS: QoS
+:TTL: TTL
+:RAML: RAML
+:RAMLDef: RAML definition
+:RAMLDefs: RAML definitions
+:RAMLF: RAML fragment
+:RAMLFs: RAML fragments
+:RAMLT: RAML type
+:RAMLLib: RAML library
+:OpenAPISpec: OpenAPI Specification (OAS)
+:OAS: OAS
+:OASDef: OpenAPI definition
+:REST: REST
+:JSON: JSON
+:RESTAPI: REST API
+:RESTAPIs: REST APIs
+:RESTConn: REST connector
+:RESTConns: REST connectors
+:RESTConnConf: REST connector configuration
+:RESTConnArtifactIdPrefix: pass:q[mule-plugin-]
+:APolicy: API policy
+:APolicies: API policies
+:AAPolicy: automated policy
+:AAPolicies: automated policies
+:CIDEnfPolicy: Client ID enforcement API policy
+:BasicAuth: HTTP Basic Authentication
+:AuthHeader: pass:q[Authorization]
+:MsgLog: Message Logging
+:IDP: Identity Provider
+:IDPs: Identity Providers
+:IDM: Identity Management
+:CLM: Client Management
+:ADM: API data model
+:ADMs: API data models
+:DT: data type
+:DTs: data types
+:ADT: API data type
+:ADTs: API data types
+:EDM: Enterprise Data Model
+:EDMs: Enterprise Data Models
+:BC: Bounded Context
+:BCs: Bounded Contexts
+:BCDM: Bounded Context Data Model
+:BCDMs: Bounded Context Data Models
+:MApp: Mule app
+:MApps: Mule apps
+:MFlow: Mule flow
+:MFlows: Mule flows
+:MFlowConf: Mule flow config file
+:MFlowConfs: Mule flow config files
+:Conn: Connector
+:Conns: Connectors
+:XMLSDK: XML SDK
+:XMLSDKMod: XML SDK module
+:XMLSDKMods: XML SDK modules
+:HTTPConn: HTTP connector
+:SockConn: Sockets connector
+:AP: Anypoint Platform
+:APOrg: Anypoint Platform organization
+:APPCE: Anypoint Platform Private Cloud Edition
+:AP4PCF: Anypoint Platform for Pivotal Cloud Foundry
+:DCenter: Design Center
+:MCenter: Management Center
+:Studio: Studio
+//:Studio: Anypoint Studio
+:StudioFlowEd: Mule config flow editor
+:StudioFlowEdXML: Mule config flow XML editor
+:StudioFlowEdVis: visual Mule config flow editor
+:MUnit: MUnit
+:ACLI: Anypoint CLI
+:FDesigner: Flow Designer
+:MR: Mule runtime
+:MR3: Mule 3 runtime
+:MR4: Mule 4 runtime
+:MRs: Mule runtimes
+:MR3s: Mule 3 runtimes
+:MR4s: Mule 4 runtimes
+:MHomeEnvVar: pass:q[MHOME]
+:OStore: Object Store
+:OStores: Object Stores
+:OStoreConn: Object Store connector
+:CH: CloudHub
+:CHLB: CloudHub Load Balancer
+:CHLBs: CloudHub Load Balancers
+:CHSLB: CloudHub Shared Load Balancer
+:CHSLBs: CloudHub Shared Load Balancers
+:CHDLB: CloudHub Dedicated Load Balancer
+:CHDLBs: CloudHub Dedicated Load Balancers
+:CHSWC: CloudHub Shared Worker Cloud
+:AVPC: VPC
+:AVPCs: VPCs
+:ADesigner: API Designer
+:ANotebook: API Notebook
+:ANotebooks: API Notebooks
+:PubPortal: public developer portal
+:PubPortals: public developer portals
+:AConsole: API Console
+:AConsoles: API Consoles
+:MockSvc: Mocking Service
+:Exchange: Exchange
+:Exchanges: Exchanges
+:ExchangeUrl: https://anypoint.mulesoft.com/exchange/
+:AMQ: Anypoint MQ
+:AMQUrl: Anypoint MQ URL
+:AMQDest: Anypoint MQ destination
+:AMQDests: Anypoint MQ destinations
+:AMQX: Anypoint MQ exchange
+:AMQXs: Anypoint MQ exchanges
+:AMQQ: Anypoint MQ queue
+:AMQQs: Anypoint MQ queues
+:AMQA: Anypoint MQ client app
+:AMQAs: Anypoint MQ client apps
+:AMQConn: Anypoint MQ connector
+:AMQConnConf: pass:q,a,c[{lt}anypoint-mq:config /{gt}]
+:AManager: API Manager
+:AutoDisc: autodiscovery
+:AAnalytics: Anypoint Analytics
+:AVis: Visualizer
+:AVisELayer: pass:q[Experience]
+:AVisPLayer: pass:q[Process]
+:AVisSLayer: pass:q[System]
+:AVisEditorPerm: pass:q[Visualizer Editor]
+:ARM: Runtime Manager
+:AAM: Anypoint Access Management
+:RTF: Runtime Fabric
+:AMon: Anypoint Monitoring
+:AMonUserPerm: pass:q[Anypoint Monitoring User]
+:FunMon: Functional Monitor
+:FunMons: Functional Monitors
+:ASE: Security Edge
+:EPolicy: Edge policy
+:EPolicies: Edge policies
+:DW: DataWeave
+:DWMod: DataWeave module
+:DWMods: DataWeave modules
+:TMComp: Transform Message component
+:AProxy: API proxy
+:AProxies: API proxies
+:AWS: AWS
+:OA2: OAuth 2.0
+:OA2SpecUrl: https://tools.ietf.org/html/rfc6749
+:OAMod: OAuth module
+:CI: CI/CD
+:defaultUserOS: _defaultUserObjectStore
+:K8s: Kubernetes
+:AKit: APIkit
+:MVN: Maven
+:MRP: Maven Resources plugin
+:MVNCoords: Maven coordinates
+:MVNBuildElem: pass:q,a,c[{lt}build /{gt}]
+:MVNPropElem: pass:q,a,c[{lt}properties /{gt}]
+:MVNPackElem: pass:q,a,c[{lt}packaging /{gt}]
+:MAppMVNPack: pass:q[mule-application]
+:MVNGroupIdElem: pass:q,a,c[{lt}groupId /{gt}]
+:MVNArtifactIdElem: pass:q,a,c[{lt}artifactId /{gt}]
+:MVNVersionElem: pass:q,a,c[{lt}version /{gt}]
+:MVNDepsElem: pass:q,a,c[{lt}dependencies /{gt}]
+:MVNDepMgmtElem: pass:q,a,c[{lt}dependencyManagement /{gt}]
+:MVNPlugElem: pass:q,a,c[{lt}plugins /{gt}]
+:MVNPlugMgmtElem: pass:q,a,c[{lt}pluginManagement /{gt}]
+:MVNReposElem: pass:q,a,c[{lt}repositories /{gt}]
+:MVNPlugReposElem: pass:q,a,c[{lt}pluginRepositories /{gt}]
+:MVNClassElem: pass:q,a,c[{lt}classifier /{gt}]
+:MVNDir: pass:q,a,c[{tilde}/.m2/]
+:MVNRepo: pass:q,a,c[{tilde}/.m2/repository]
+:MVNRelPath: pass:q,a,c[{lt}relativePath /{gt}]
+:POMXml: pass:q[pom.xml]
+:SettingsXml: pass:q[settings.xml]
+:RemoteRepos: pass:q[_remote.repositories]
+:POM: POM
+:POMs: POMs
+:PPOM: parent POM
+:PPOMs: parent POMs
+:CPOM: child POM
+:CPOMs: child POMs
+:BOM: BOM
+:BOMs: BOMs
+:MMP: Mule Maven plugin
+:MEMP: Mule Extensions Maven plugin
+:MMPMvnUrl: https://repository.mulesoft.org/nexus/content/repositories/releases/org/mule/tools/maven/mule-maven-plugin/
+:MMPServerElem: pass:q,a,c[{lt}server /{gt}]
+:MMPBGElem: pass:q,a,c[{lt}businessGroup /{gt}]
+:MMPLatestRTPatchElem: pass:q,a,c[{lt}applyLatestRuntimePatch /{gt}]
+:MUMP: MUnit Maven plugin
+:MUMPMvnUrl: https://repository.mulesoft.org/nexus/content/repositories/releases/com/mulesoft/munit/tools/munit-maven-plugin/
+:MPlugin: Mule plugin
+:MPlugins: Mule plugins
+:MPluginClassifier: mule-plugin
+:LibMPlugin: library-style Mule plugin
+:CIDS: Client ID and Secret
+:SOAPWS: SOAP web service
+:WSC: Web Service Consumer connector
+:WSCArtifactId: pass:q[mule-wsc-connector]
+:ReconnForever: pass:q,a,c[{lt}reconnect-forever /{gt}]
+:VMConn: VM connector
+:VMConnConf: VM connector configuration
+:VMList: pass:q,a,c[{lt}vm:listener /{gt}]
+:USS: Until Successful scope
+:TryS: Try scope
+:EHandler: error handler
+:EHandlers: error handlers
+:OEC: pass:q[on-error-continue]
+:OEP: pass:q[on-error-propagate]
+:SGR: Scatter-Gather router
+:ChoiceR: Choice router
+:CacheS: Cache scope
+:CompErr: pass:q[MULE:COMPOSITE_ERROR]
+:ExprErr: pass:q[MULE:EXPRESSION]
+:RedelExErr: pass:q[MULE:REDELIVERY_EXHAUSTED]
+:ValMod: Validation module
+:XmlMod: XML module
+:XmlS: XML-Schema
+:JsonMod: JSON module
+:JsonS: JSON-Schema
+:cURL: cURL
+:ARC: https://install.advancedrestclient.com/install[Advanced REST Client]
+:Postman: https://www.getpostman.com/[Postman]
+:JRE: JRE
+:JDK: JDK
+:OpenJDK8: https://adoptopenjdk.net[OpenJDK 8]
+:Git: https://git-scm.com/downloads[Git]
+:CLI: command-line interface
+:TargetDir: pass:q[target]
+:TargetClassesDir: pass:q[target/classes]
+:SrcMR: pass:q[src/main/resources]
+:SrcTR: pass:q[src/test/resources]
+:SrcMM: pass:q[src/main/mule]
+:SrcTM: pass:q[src/test/munit]
+:MUnitSetEvt: pass:q,a,c[{lt}munit:set-event /{gt}]
+:MUnitBeh: pass:q,a,c[{lt}munit:behavior /{gt}]
+:MUnitExec: pass:q,a,c[{lt}munit:execution /{gt}]
+:MUnitVal: pass:q,a,c[{lt}munit:validation /{gt}]
+:MUnitVerifCall: pass:q,a,c[{lt}munit-tools:verify-call /{gt}]
+:MUnitBefSuite: pass:q,a,c[{lt}munit:before-suite /{gt}]
+:MUnitBefTest: pass:q,a,c[{lt}munit:before-test /{gt}]
+:L4J: Log4J
+:L4JXml: pass:q[log4j2.xml]
+:L4JTXml: pass:q[log4j2-test.xml]
+:DEBUGLevel: pass:q[DEBUG]
+:INFOLevel: pass:q[INFO]
+:ConfElem: pass:q,a,c[{lt}configuration /{gt}]
+:HTTPList: pass:q,a,c[{lt}http:listener /{gt}]
+:HTTPListConf: HTTP Listener configuration
+:HTTPListConfs: HTTP Listener configurations
+:HTTPRequ: pass:q,a,c[{lt}http:request /{gt}]
+:HTTPRequConf: HTTP Request configuration
+:TLSContextConf: TLS context configuration
+:HTTPRequAttrs: pass:q[org.mule.extension.http.api.HttpRequestAttributes]
+:HTTPRespAttrs: pass:q[org.mule.extension.http.api.HttpResponseAttributes]
+:HTTPPortProp: pass:q[http.port]
+:HTTPSPortProp: pass:q[https.port]
+:HTTPPrivPortProp: pass:q[http.private.port]
+:HTTPSPrivPortProp: pass:q[https.private.port]
+:AKitConf: pass:q,a,c[{lt}apikit:config /{gt}]
+:CHRegionUSE1: pass:q[us-e1 (N. Virginia)]
+:CHRegionUSE2: pass:q[us-e2 (Ohio)]
+:FQDN: fully-qualified domain name
+:SecPropsModule: Secure Configuration Properties module
+:SecPropsPrefix: pass:q[secure::]
+:SecPropsTool: Secure Properties tool
+:TmpDir: pass:q[/tmp]
+:MuleArtJson: pass:q[mule-artifact.json]
+:NameAttr: pass:q[name]
+:MuleXMLElem: pass:q,a,c[{lt}mule /{gt}]
+:SetPayload: pass:q,a,c[{lt}set-payload /{gt}]
+:FlowRef: pass:q,a,c[{lt}flow-ref /{gt}]
+:SubFlow: pass:q[sub-flow]
+:SubFlows: pass:q[sub-flows]
+:JSONLogger: JSON Logger
+:JSONLoggerGitHubUrl: https://github.com/mulesoft-consulting/json-logger/tree/mule-4.x
+:JAR: JAR
+:AppJson: pass:q[application/json]
+:AppWWWUrlEnc: pass:q[application/x-www-form-urlencoded]
+:TargetAttr: pass:q[target]
+:MPalette: Mule palette
+:DLQ: Dead Letter Queue
+:OOME: out-of-memory error
+:RedelPol: redelivery policy
+:SFTPConn: SFTP connector
+:FileConn: File connector
+:EmailConn: Email connector
+:DBConn: Database connector
+:JMSConn: JMS connector
+
+:RAMLTitle: pass:q[title]
+:RAMLBaseURI: pass:q[baseUri]
+:RAMLVersion: pass:q[version]
+
+:DocNameAttr: pass:q[doc:name]
+:DocIdAttr: pass:q[doc:id]
+:SetVar: pass:q,a,c[{lt}set-variable /{gt}]
+:RaiseError: pass:q,a,c[{lt}raise-error /{gt}]
+
+:DefaultDomain: pass:q[default]
+:DomainConfXml: pass:q[mule-domain-config.xml]
+
+:UNIX: Unix variants
+:WIN: Windows
+
+:mTLSAuth: mutual TLS authentication
+:mTLS: mTLS

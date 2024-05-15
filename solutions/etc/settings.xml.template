@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <!-- MuleSoft repository for artifacts related to Mule runtime EE -->
+            <id>releases-ee</id>
+            <!-- students: replace with credentials provided in class -->
+            <username>{{ee.uname}}</username>
+            <password>{{ee.passw}}</password>
+        </server>
+        <server>
+            <!-- for deployments to CloudHub using Mule Maven plugin with <server> configuration: -->
+            <id>cloudhub</id>
+            <!-- students: to deploy to CloudHub, replace with credentials for a suitable account of your Anypoint Platform organization -->
+            <username>{{ch.uname}}</username>
+            <password>{{ch.passw}}</password>
+        </server>
+    </servers>
+</settings>

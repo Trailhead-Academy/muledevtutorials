@@ -1,0 +1,61 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+= Generated Asciidoctor Diagrams
+:author: MuleSoft Training
+:email: <gerald.loeffler@mulesoft.com>
+:revdate: 2019-03-06
+//
+:stylesdir: ../adoc/styles
+include::../includes/common-preamble.adoc[]
+//
+include::../includes/common-terms.adoc[]
+//
+// normally define in an included adoc file, but hard-coded here for simplicity:
+:CancelledFX: pass:q[cancelled-flights-exchg]
+:FMSAPI:  pass:q[Flights Management SAPI]
+:FMS: pass:q[Flights Management system]
+:CancelNotif: pass:q[Cancellation Notification]
+:FCancelEvt: pass:q[Flight Cancelled Event]
+:!toc:
+
+[plantuml,template-diagram,{img},subs="attributes+"]
+....
+skinparam arrowColor grey
+
+database    "{CancelledFX}\n{AMQX}" as t
+participant "{FMSAPI}"              as c
+participant "{FMS}"                 as s
+
+autonumber
+
+group Register HTTP callback at startup
+  c -\  s : SOAP registerForCancellationNotifications(<callbackURL>)
+  s ->  s : Persist <callbackURL>
+  note right of s
+    Maintain list of all registered <callbackURL>s
+    Ignore duplicate <<callbackURL>s
+  end note
+  c \\- s
+end
+
+group Receive {CancelNotif}
+  s -\  c : HTTP POST to <callbackURL>\n{CancelNotif}
+  c ->  c : Validate {CancelNotif}
+  c ->  c : Publish {CancelNotif} to persistent VM queue
+  s \\- c : HTTP 202
+end
+
+group Transform and deliver {FCancelEvt}
+  note over t,c
+    In one transaction
+    if supported by message broker
+  end note
+  c -> c : Receive {CancelNotif} from persistent VM queue
+  c -> c : Transform {CancelNotif} to {FCancelEvt}
+  c -> c : Validate {FCancelEvt}
+  c -> t : Publish {FCancelEvt}
+end
+....

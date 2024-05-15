@@ -1,0 +1,52 @@
+name: Detect Dependency Updates
+
+#
+# Runs on a regular schedule to detect available updates to any Maven dependencies
+# and create matching GitHub Issues on this repo detailing each possible update.
+#
+
+on:
+  schedule:
+    - cron: '0 0,8,16 * * *' # 3 times a day every day
+  push:
+    branches:
+      - master
+    paths:
+      - 'solutions/create-dependency-update-issues.sh'     # the script being executed by this workflow
+      - '.github/workflows/detect-dependency-updates.yaml' # this file
+
+env:
+  BASE_DIR: solutions
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  detect-updates-and-create-issues:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v2
+      - name: Set up JDK 1.8 and Maven
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Create settings.xml with credentials from GitHub secrets
+        run: ./solutions/etc/create-settings-xml-from-template.sh "$EE_UNAME" "$EE_PASSW" "$CH_UNAME" "$CH_PASSW"
+        env:
+          EE_UNAME: ${{ secrets.RELEASES_EE_USERNAME }}
+          EE_PASSW: ${{ secrets.RELEASES_EE_PASSWORD }}
+          # no deployments to CH done, so no need for these credentials:
+          CH_UNAME: unused
+          CH_PASSW: unused
+      # Detect updates and create Issues
+      - name: Detect dependency updates and create matching GitHub Issues
+        working-directory: ${{ env.BASE_DIR }}
+        run: ./create-dependency-update-issues.sh
+        env:
+          # the username and personal access token of a user who can create GitHub Issues
+          # env variable names are required by Hub (https://hub.github.com/hub.1.html#configuration)
+          GITHUB_USER:  ${{ secrets.REPO_PUSHER_USER_NAME }}
+          GITHUB_TOKEN: ${{ secrets.REPO_PUSHER_PERSONAL_ACCESS_TOKEN }}

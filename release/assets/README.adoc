@@ -1,0 +1,5 @@
+= Release Assets
+
+This is the directory where the automated release process for this material creates assets for a new release, which are then attached to the corresponding GitHub Release.
+
+None of the assets in this directory are to be checked-in to Git, hence the `.gitignore` file ensures that.

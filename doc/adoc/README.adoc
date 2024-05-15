@@ -1,0 +1,3 @@
+= AsciiDoc Assets
+
+Assets needed for producing properly formatted AsciiDoc output.

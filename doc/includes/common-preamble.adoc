@@ -1,0 +1,73 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+//
+:doctype: book
+:chapter-refsig: Module
+:chapter-label: Module
+:!section-refsig:
+// set stylesdir before including this file!, e.g:
+//:stylesdir: ./adoc/styles
+//
+:reproducible:
+//
+:imagesdir: ./images
+//
+:source-indent: 0
+:source-language: xml
+// turn-on linenums if the syntax highlighter supports it:
+//:source-linenums-option:
+// pygments: has serious issues with linebreaks
+//:source-highlighter: pygments
+//:pygments-style: pastie
+//:pygments-css: style
+//:pygments-linenums-mode: inline
+// rouge: doesn't yet support inline linenums mode and has issues with multi-paragraph YAML files
+:source-highlighter: rouge
+//:rouge-style: magritte
+:rouge-style: base16.solarized
+:rouge-css: style
+:rouge-linenums-mode: inline
+// coderay: doesn't do linenums and doesn't know bash
+//:source-highlighter: coderay
+//:coderay-css: style
+//:coderay-linenums-mode: inline
+//
+:toc:
+//:toclevels: 3
+:toclevels: 2
+:sectlinks:
+:sectanchors:
+:sectnums:
+//:sectnumlevels: 5
+:sectnumlevels: 4
+//:xrefstyle: short
+:xrefstyle: basic
+:icons: font
+:stylesheet: mulesoft-theme.css
+:pdf-stylesdir: {stylesdir}
+:pdf-style: mulesoft-theme.yml
+:pdf-fontsdir: {stylesdir}/fonts
+//
+// image magic
+:img: svg
+ifdef::backend-html5[]
+:full: width='100%'
+:medium: width='75%'
+:small: width='50%'
+:xsmall: width='25%'
+endif::[]
+ifdef::backend-pdf[]
+:full: pdfwidth='100%'
+:medium: pdfwidth='75%'
+:small: pdfwidth='50%'
+:xsmall: pdfwidth='25%'
+endif::[]
+ifdef::backend-docbook5[]
+:full: scaledwidth='100%'
+:medium: scaledwidth='75%'
+:small: scaledwidth='50%'
+:xsmall: scaledwidth='25%'
+endif::[]

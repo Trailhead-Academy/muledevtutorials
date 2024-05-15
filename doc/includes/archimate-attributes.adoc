@@ -1,0 +1,249 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+//
+// ArchiMate terms as Asciidoc attributes
+//
+// Relationships
+//
+// Structural Relationships
+// consists of one or more other elements
+:Composition: composition
+:composing: composing
+:composed-in: composed in
+// groups a number of other elements
+:Aggregation: aggregation
+:aggregating: aggregating
+:aggregated-in: aggregated in
+// allocation of responsibility, performance of behavior, or execution
+:Assignment: assignment
+:assigned-to: assigned to
+// plays a critical role in the creation, achievement, sustenance, or operation of a more abstract entity
+:Realization: realization
+:realizing: realizing
+// Dependency Relationships
+// provides its functionality to another element
+:Serving: serving
+:serving: serving
+//  the ability of behavior and active structure elements to observe or act upon passive structure elements
+:Access: access
+:accessing: accessing
+// affects the implementation or achievement of some motivation element
+:Influence: influence
+:influencing: influencing
+// Dynamic Relationships
+// temporal or causal relationship
+:Trigger: trigger
+:triggering: triggering
+// transfer from one element to another
+:Flow: flow
+:flowing: flowing
+// the flip-side of flowing
+:transferring-to: transferring data/information to
+// Other Relationships
+// is a particular kind of another element
+:Specialization: specialization
+:specializing: specializing
+// unspecified relationship
+:Association: association
+:associated-with: associated with
+// to connect relationships of the same type
+:Junction: junction
+//
+// Composite elements
+//
+// aggregates or composes concepts that belong together
+:Grouping: grouping
+:Groupings: groupings
+// place or position where structure elements can be located or behavior can be performed
+:Location: location
+:Locations: locations
+//
+// Motivation elements
+//
+// role of an individual, team, or organization that represents their interests in the outcome of the architecture
+:Stakeholder: stakeholder
+:Stakeholders: stakeholders
+// external or internal condition that motivates an organization to define its goals and implement the changes necessary to achieve them
+:Driver: driver
+:Drivers: drivers
+// result of an analysis of the state of affairs of the enterprise with respect to some driver
+:Assessment: assessment
+:Assessments: assessments
+// high-level statement of intent, direction, or desired end state for an organization and its stakeholders
+:Goal: goal
+:Goals: goals
+// end result that has been achieved
+:Outcome: outcome
+:Outcomes: outcomes
+// qualitative statement of intent that should be met by the architecture
+:Principle: principle
+:Principles: principles
+// statement of need that must be met by the architecture
+:Requirement: requirement
+:Requirements: requirements
+// factor that prevents or obstructs the realization of goals
+:Constraint: constraint
+:Constraints: constraints
+// knowledge or expertise present in, or the interpretation given to, a core element in a particular context
+:Meaning: meaning
+:Meanings: meanings
+// relative worth, utility, or importance of a core element or an outcome
+:Value: value
+:Values: values
+//
+// Strategy elements
+//
+// asset owned or controlled by an individual or organization
+:Resource: resource
+:Resources: resources
+// ability that an active structure element possesses
+:Capability: capability
+:Capabilities: capabilities
+// approach or plan for configuring some capabilities and resources of the enterprise, undertaken to achieve a goal
+:CoA: course of action
+:CoAs: courses of action
+//
+// Business layer elements
+//
+// Business layer active structure elements
+// business entity that is capable of performing behavior
+:Actor: business actor
+:Actor-c: Business actor
+:Actors: business actors
+:Actors-c: Business actors
+// responsibility for performing specific behavior, to which an actor can be assigned, or the part an actor plays in a particular action or event
+:Role: business role
+:Roles: business roles
+// aggregate of two or more business internal active structure elements that work together to perform collective behavior
+:Bus-Collab: business collaboration
+:Bus-Collabs: business collaborations
+// point of access where a business service is made available to the environment
+:Bus-Interface: business interface
+:Bus-Interface-c: Business interface
+:Bus-Interfaces: business interfaces
+:Bus-Interfaces-c: Business interfaces
+// Business layer behavior elements
+// sequence of business behaviors that achieves a specific outcome such as a defined set of products or business services
+:Bus-Process: business process
+:Bus-Processes: business processes
+// collection of business behavior based on a chosen set of criteria
+:Bus-Function: business function
+:Bus-Functions: business functions
+// collective business behavior performed by (a collaboration of) two or more business roles
+:Bus-Interaction: business interaction
+:Bus-Interactions: business interactions
+// an organizational state change
+:Bus-Event: business event
+:Bus-Events: business events
+// explicitly defined exposed business behavior
+:Bus-Service: business service
+:Bus-Service-c: Business service
+:Bus-Services: business services
+:Bus-Services-c: Business services
+// Business layer passive structure elements
+// concept used within a particular business domain
+:Bus-Object: business object
+:Bus-Objects: business objects
+// specification of an agreement between a provider and a consumer that specifies the rights and obligations associated with a product
+:Contract: contract
+:Contract-c: Contract
+:Contracts: contracts
+// perceptible form of the information carried by a business object
+:Representation: representation
+:Representations: representations
+// Business layer composite elements
+// coherent collection of services and/or passive structure elements, accompanied by a contract, which is offered as a whole to customers
+:Product: product
+:Products: products
+//
+// Application layer elements
+//
+// Application layer active structure elements
+// encapsulation of application functionality aligned to implementation structure, which is modular and replaceable
+// encapsulates its behavior and data, exposes services, and makes them available through interfaces
+:App-Comp: application component
+:App-Comp-c: Application component
+:App-Comps: application components
+:App-Comps-c: Application components
+:App-Comps-cc: Application Components
+// aggregate of application components that work together to perform collective application behavior
+:App-Collab: application collaboration
+:App-Collabs: application collaborations
+// point of access where application services are made available
+:App-Interface: application interface
+:App-Interface-c: Application interface
+:App-Interfaces: application interfaces
+:App-Interfaces-c: Application interfaces
+// Application layer behavior elements
+// automated behavior that can be performed by an application component
+:App-Function: application function
+:App-Functions: application functions
+// collective application behavior performed by a collaboration of application components
+:App-Interaction: application interaction
+:App-Interactions: application interactions
+// sequence of application behaviors that achieves a specific outcome
+:App-Process: application process
+:App-Processes: application processes
+// a state change
+:App-Event: application event
+:App-Events: application events
+// explicitly defined exposed application behavior
+:App-Service: application service
+:App-Service-c: Application service
+:App-Services: application services
+:App-Services-c: Application services
+// Application layer passive structure elements
+// data structured for automated processing
+:Data-Object: data object
+:Data-Objects: data objects
+//
+// Technology layer elements
+//
+// Technology layer active structure elements
+// computational or physical resource that hosts, manipulates, or interacts with other computational or physical resources
+:Node: node
+:Nodes: nodes
+// physical IT resource upon which system software and artifacts may be stored or deployed for execution
+:Device: device
+:Devices: devices
+// software that provides or contributes to an environment for storing, executing, and using software or data deployed within it
+:System-Software: system software
+// aggregate of nodes that work together to perform collective technology behavior
+:Tech-Collab: technology collaboration
+:Tech-Collabs: technology collaborations
+// point of access where technology services offered by a node can be accessed
+:Tech-Interface: technology interface
+:Tech-Interface-c: Technology interface
+:Tech-Interfaces: technology interfaces
+:Tech-Interfaces-c: Technology interfaces
+// link between two or more nodes, through which these nodes can exchange data or material
+:Path: path
+:Paths: paths
+// connects electronic devices for transmission, routing, and reception of data
+:Comm-Network: communication network
+:Comm-Networks: communication networks
+// Technology layer behavior elements
+// collection of technology behavior that can be performed by a node
+:Tech-Function: technology function
+:Tech-Functions: technology functions
+// sequence of technology behaviors that achieves a specific outcome
+:Tech-Process: technology process
+:Tech-Processes: technology processes
+// collective technology behavior performed by a collaboration of nodes
+:Tech-Interaction: technology interaction
+:Tech-Interactions: technology interactions
+// a state change
+:Tech-Event: technology event
+:Tech-Events: technology events
+// explicitly defined exposed technology behavior
+:Tech-Service: technology service
+:Tech-Service-c: Technology service
+:Tech-Services: technology services
+:Tech-Services-c: Technology services
+// Technology layer passive structure elements
+// data that is used or produced in a software development process, or by deployment and operation of a system
+:Artifact: artifact
+:Artifacts: artifacts

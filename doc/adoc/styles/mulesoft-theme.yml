@@ -1,0 +1,140 @@
+#extends: default
+
+mulesoft:
+  colour:
+    mulesoft_blue:  '#00A1DF' # MuleSoft Blue
+    mulesoft_light: '#99999A' # MuleSoft Light
+    mulesoft_dark:  '#414042' # MuleSoft Dark
+    secondary_blue: '#00607C' # Secondary Blue
+    medium_grey:    '#99999A' # Medium Grey
+    light_grey:     '#F2F2F2' # Light Grey
+  font:
+    normal: Verdana
+    special: Verdana
+    fixed: Courier # TODO
+  logo: MuleSoft_logo_299C.png
+
+font:
+  catalog:
+    Verdana:
+      normal: verdana-normal.ttf
+      italic: verdana-italic.ttf
+      bold: verdana-bold.ttf
+      bold_italic: verdana-bold_italic.ttf
+  fallbacks:
+    - Helvetica
+
+page:
+  # A4
+  #size: A4
+  #margin: [2.5cm, 2.0cm, 3.0cm, 2.0cm] # top, right, bottom, left
+  # or US Letter
+  size: Letter
+  margin: [1.0in, 0.75in, 1.0in, 0.75in] # top, right, bottom, left
+  #background_image: beta.png
+
+base:
+  align: left # justify
+  font_family: $mulesoft_font_normal
+  font_size: 10
+  line_height_length: 15
+  line_height: $base_line_height_length / $base_font_size
+
+vertical_spacing: 15
+
+link:
+  font_color: $mulesoft_colour_mulesoft_blue
+
+literal:
+  font_color: $mulesoft_colour_mulesoft_dark
+  font_family: $mulesoft_font_fixed
+
+heading:
+  font_family: $mulesoft_font_special
+  # same colours as in toc section
+  h1_font_color: $mulesoft_colour_mulesoft_blue
+  h2_font_color: $mulesoft_colour_mulesoft_blue
+  h3_font_color: $mulesoft_colour_mulesoft_dark
+  h4_font_color: $mulesoft_colour_mulesoft_dark
+  h5_font_color: $mulesoft_colour_mulesoft_dark
+  h6_font_color: $mulesoft_colour_mulesoft_dark
+
+title_page:
+  align: center
+  logo:
+    image: image:$mulesoft_logo[pdfwidth=50%]
+    align: center
+    top: 20%
+  title:
+    font_color: $mulesoft_colour_mulesoft_blue
+  subtitle:
+    font_color: $mulesoft_colour_mulesoft_blue
+  authors:
+    font_color: $mulesoft_colour_mulesoft_dark
+  revision:
+    font_color: $mulesoft_colour_mulesoft_dark
+
+code:
+  font_family: $mulesoft_font_fixed
+
+image:
+  width: 100%
+  align: center
+
+description_list:
+  description_indent: $base_font_size * 1.5
+
+outline_list:
+  indent: $base_font_size * 1.5
+  item_spacing: $vertical_spacing / 4.0
+
+table:
+  head:
+    background_color: $mulesoft_colour_light_grey
+    font_color: $mulesoft_colour_mulesoft_dark
+  body:
+    stripe_background_color: $mulesoft_colour_light_grey
+
+toc:
+  # same colours as in heading section
+  h1_font_color: $mulesoft_colour_mulesoft_blue
+  h2_font_color: $mulesoft_colour_mulesoft_blue
+  h3_font_color: $mulesoft_colour_mulesoft_dark
+  h4_font_color: $mulesoft_colour_mulesoft_dark
+  h5_font_color: $mulesoft_colour_mulesoft_dark
+  h6_font_color: $mulesoft_colour_mulesoft_dark
+  dot_leader:
+    content: ""
+    levels: 
+
+header:
+  height: $base_line_height_length * 2.5
+  font_family: $mulesoft_font_special
+  font_color: $mulesoft_colour_mulesoft_light
+  vertical_align: bottom
+  recto:
+    left:
+      content: '{document-subtitle}'
+    right:
+      content: '{document-title}'
+  verso:
+    left:
+      content: '{document-subtitle}'
+    right:
+      content: '{document-title}'
+
+footer:
+  height: $base_line_height_length * 2.5
+  font_family: $mulesoft_font_special
+  font_color: $mulesoft_colour_mulesoft_light
+  vertical_align: top
+  recto:
+    left:
+      content: '(C) 2022 MuleSoft Inc.'
+    right:
+      content: '{page-number}'
+  verso:
+    left:
+      content: '(C) 2022 MuleSoft Inc.'
+    right:
+      content: '{page-number}'

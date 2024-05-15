@@ -1,0 +1,3 @@
+= The Manual
+
+AsciiDoc source and resulting output of the Manual that is part of this material.

@@ -1,0 +1,13 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+[[bibliography]]
+[bibliography]
+== Bibliography
+
+// IEEE Computer Society Transactions citation style:
+// http://ieeeauthorcenter.ieee.org/wp-content/uploads/Computer_Society_Word_template.zip
+
+- [[[Ref1,Ref1]]] MuleSoft, "Mule Runtime", https://docs.mulesoft.com/mule-runtime. 2020.

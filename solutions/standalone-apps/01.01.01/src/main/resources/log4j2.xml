@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  MuleSoft Training - REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL
+  %%
+  Copyright (C) 2015 - 2022 MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  %%
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+  #L%
+  -->
+<Configuration>
+    <Appenders>
+        <!-- reply on Maven resource filtering to replace Maven properties with their values -->
+        <RollingFile name="file" fileName="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}${project.artifactId}.log" filePattern="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}${project.artifactId}-%i.log">
+            <PatternLayout pattern="%-5p %d [%t] %X{correlationId}%c: %m%n"/>
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="org.mule.service.http.impl.service.HttpMessageLogger" level="INFO"/>
+        <AsyncLogger name="org.mule.service.http" level="WARN"/>
+        <AsyncLogger name="org.mule.extension.http" level="WARN"/>
+        <AsyncLogger name="org.mule" level="INFO"/>
+        <AsyncLogger name="com.mulesoft" level="INFO"/>
+        <AsyncRoot level="INFO">
+            <AppenderRef ref="file"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

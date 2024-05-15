@@ -1,0 +1,53 @@
+name: Build Docs
+
+#
+# Continuous Integration workflow that runs on Git pushes and builds all docs.
+# Somewhat unconventionally, it also commits/pushes the built docs, i.e., the resulting HTML and PDF files.
+#
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'doc/**'                                      # the base dir
+      - '!doc/manual/*.html'                          # exclude HTML output of this build to avoid build recursion
+      - '!doc/manual/*.pdf'                           # exclude PDF  output of this build to avoid build recursion
+      - '.github/workflows/build-student-manual.yaml' # this file
+
+env:
+  BASE_DIR: doc
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-checkin:
+    runs-on: ubuntu-latest
+    env:
+      # the username of a user who can push to master; should be identical to ${{ github.actor }} but 
+      # we need a matching personal access token and therefor pair the username explicitly to the token as secrets
+      USER: ${{ secrets.REPO_PUSHER_USER_NAME }}
+    steps:
+      - name: Checkout GitHub repo as user who can push to master
+        run: git clone https://$USER:$TOKEN@github.com/$REPO .
+        env:
+          # the personal access token for the above user who can push to master
+          TOKEN: ${{ secrets.REPO_PUSHER_PERSONAL_ACCESS_TOKEN }}
+          REPO:  ${{ github.repository }}
+      - name: Build all docs with Docker
+        working-directory: ${{ env.BASE_DIR }}
+        run: ./build-with-docker.sh
+      - name: Git commit and push built docs to master
+        run: |
+          git config --local user.name  "$USER"
+          git config --local user.email "$EMAIL"
+          git pull
+          git add doc
+          git commit -m "built docs automatically triggered by $TRIGGER" || [[ $? == 1 ]]
+          git push
+        env:
+          # the email for the above user who can push to master
+          EMAIL:   ${{ secrets.REPO_PUSHER_USER_EMAIL }}
+          TRIGGER: ${{ github.sha }}

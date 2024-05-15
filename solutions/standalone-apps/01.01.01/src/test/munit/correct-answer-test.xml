@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  MuleSoft Training - REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL
+  %%
+  Copyright (C) 2015 - 2022 MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  %%
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+  #L%
+-->
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd  http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+    <!-- adapt this to this question: -->
+    <global-property name="correctAnswer" value="Array"/>
+    <global-property name="logger" value="correct.answers"/>
+    <munit:config name="correct-answer-test.xml"/>
+    <munit:test name="correct-answer" description="Tests that the assumed correct answer to this certification question is actually correct" ignore="true">
+        <munit:behavior>
+            <logger message="No input to prepare" level="DEBUG" doc:name="Logger"/>
+        </munit:behavior>
+        <munit:execution>
+            <flow-ref name="selectFromOrders" doc:name="selectFromOrders"/>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-equals actual="#[payload]" expected="${correctAnswer}" doc:name="Assert correct answer"/>
+            <logger message="${correctAnswer}" category="${logger}" doc:name="Log corrrect answer"/>
+        </munit:validation>
+    </munit:test>
+</mule>

@@ -1,0 +1,10 @@
+= Documents
+
+Dcouments that are part of this material, mainly in AsciiDoc format.
+
+We use Asciidoctor and Asciidoctor PDF as the AsciiDoc toolchain.
+
+Even as a course contributor you do _not_ need to install any AsciiDoc tooling, because:
+
+. There is an *automated build pipeline* that builds the Student Manual in all its output formats (HTML and PDF) from the AsciiDoc source. Therefore, you only need to edit the AsciiDoc source, or images included by that source, _commit and push to the GitHub repo_. The pipeline will then build the Student Manual and commit it in turn to the GitHub repo, next to the AsciiDoc source. After it has run, you should _pull_ from the GitHub repo to retrieve the built Student Manual artifacts. This pipeline is implemented as a GitHub Actions workflow on this GitHub repo.
+. If you _do_ want to build locally, the script link:build-with-docker.sh[] automates this using a Docker container encapsulating the AsciiDoc tooling. You only need a Docker daemon running locally to use this script.

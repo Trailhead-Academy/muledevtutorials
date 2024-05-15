@@ -1,0 +1,6 @@
+# don't commit anything to Git
+*
+
+# apart from these files:
+!.gitignore
+!README.adoc

@@ -1,0 +1,87 @@
+name: CI Solutions
+
+#
+# Continuous Integration workflow that runs on Git pushes and builds and tests all solutions code.
+# Somewhat unconventionally, it also normalizes all solutions code and commits/pushes the normalized code.
+#
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'solutions/**'                        # the base dir for this build unit
+      - '.github/workflows/ci-solutions.yaml' # this file
+
+env:
+  BASE_DIR:     solutions
+  TEST_REPORTS: test-reports-solutions
+  ENC_KEY:      ${{ secrets.ENCRYPT_KEY }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  normalize-build-test-checkin:
+    runs-on: ubuntu-latest
+    env:
+      # the username of a user who can push to master; should be identical to ${{ github.actor }} but 
+      # we need a matching personal access token and therefor pair the username explicitly to the token as secrets
+      USER: ${{ secrets.REPO_PUSHER_USER_NAME }}
+    steps:
+      # Setup
+      - name: Checkout GitHub repo as user who can push to master
+        run: git clone https://$USER:$TOKEN@github.com/$REPO .
+        env:
+          # the personal access token for the above user who can push to master
+          TOKEN: ${{ secrets.REPO_PUSHER_PERSONAL_ACCESS_TOKEN }}
+          REPO:  ${{ github.repository }}
+      - name: Set up JDK 1.8 and Maven
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Create settings.xml with credentials from GitHub secrets
+        run: ./solutions/etc/create-settings-xml-from-template.sh "$EE_UNAME" "$EE_PASSW" "$CH_UNAME" "$CH_PASSW"
+        env:
+          EE_UNAME: ${{ secrets.RELEASES_EE_USERNAME }}
+          EE_PASSW: ${{ secrets.RELEASES_EE_PASSWORD }}
+          # these secrets currently don't exist because they are currently not required by this project:
+          # CH_UNAME: ${{ secrets.CLOUDHUB_USERNAME }}
+          # CH_PASSW: ${{ secrets.CLOUDHUB_PASSWORD }}
+          CH_UNAME: unused
+          CH_PASSW: unused
+      # Normalize
+      - name: Normalize source code
+        working-directory: ${{ env.BASE_DIR }}
+        run: ./normalize-all-source-code.sh
+      # Build and test
+      - name: 'Full build incl. unit tests, package, and (potentially) install into local Maven repo'
+        working-directory: ${{ env.BASE_DIR }}
+        run: ./build.sh "$ENC_KEY"
+      # Archive artifacts
+      - name: Collect test reports
+        # Copy all target/site directories anywhere under the working directory into a directory called $TEST_REPORTS
+        # preserving the original directory hierarchy under the working directory
+        working-directory: ${{ env.BASE_DIR }}
+        run: |
+          mkdir $TEST_REPORTS
+          find . -type d -path '*/target/site' | xargs tar c | tar x -C $TEST_REPORTS
+      - name: Archive test reports
+        # Archive everything under the $TEST_REPORTS directory under that very name
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ env.TEST_REPORTS }}
+          path: ${{ env.BASE_DIR }}/${{ env.TEST_REPORTS }}
+      # Checkin, avoiding error if nothing to commit and hence git commit exit code is 1
+      - name: Git commit normalized source code (if changed) and push to master
+        run: |
+          git config --local user.name  "$USER"
+          git config --local user.email "$EMAIL"
+          git pull
+          git commit -am "normalized source code automatically triggered by $TRIGGER" || [[ $? == 1 ]]
+          git push
+        env:
+          # the email for the above user who can push to master
+          EMAIL:   ${{ secrets.REPO_PUSHER_USER_EMAIL }}
+          TRIGGER: ${{ github.sha }}

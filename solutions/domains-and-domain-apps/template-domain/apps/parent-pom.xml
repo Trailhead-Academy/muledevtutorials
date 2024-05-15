@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mulesoft.training.REPL_MinimalLCAbbrev_REPL</groupId>
+        <artifactId>solutions-parent-pom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../../parent-pom.xml</relativePath>
+    </parent>
+    <artifactId>template-domain-apps-parent-pom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <!-- IMPORTANT: Due to a limitation in MUnit, this file must be installed into the local Maven repo after every change: -->
+    <!-- mvn -f parent-pom.xml install:install-file -Dpackaging=pom -Dfile=parent-pom.xml -DpomFile=parent-pom.xml -->
+    <properties>
+        <!-- required below and for Maven resource filtering in domain apps -->
+        <domain.groupId>${project.groupId}</domain.groupId>
+        <domain.artifactId>template-domain</domain.artifactId>
+    </properties>
+    <build>
+        <!-- omit version from build artifact name -->
+        <!-- append domain name to build artifact (Mule app) name, but omit version -->
+        <!-- <finalName>${project.artifactId}-${domain.artifactId}</finalName> -->
+        <plugins>
+            <plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.mulesoft.munit.tools</groupId>
+                <artifactId>munit-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>${domain.groupId}</groupId>
+            <artifactId>${domain.artifactId}</artifactId>
+            <classifier>mule-domain</classifier>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- standard dependencies for all Mule apps - start -->
+        <!-- non-test dependencies available through domain -->
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-tools</artifactId>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+        <!-- standard dependencies for all Mule apps - end -->
+    </dependencies>
+</project>

@@ -1,0 +1,44 @@
+// Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+//
+// The software in this package is published under the terms of the
+// Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+// a copy of which has been included with this distribution in the LICENSE.txt file.
+[separator=-]
+= REPL_OfficialNameSecondHalf_REPL - REPL_OfficialNameFirstHalf_REPL
+:author: MuleSoft Training
+:email: <gerald.loeffler@mulesoft.com>
+include::course-revision.adoc[]
+//
+:stylesdir: ../adoc/styles
+include::../includes/common-preamble.adoc[]
+include::../includes/common-terms.adoc[]
+include::../includes/archimate-attributes.adoc[]
+
+// turn-off section numbering until "real" content modules start
+:sectnums!:
+
+//====================================================================================================================
+:mct: 0
+:wtct!: // init counter for WTs to 0
+include::welcome.adoc[]
+
+// turn-on section numbering for "real" content modules
+:sectnums:
+
+//====================================================================================================================
+:mct: 1
+:wtct!: // init counter for WTs to 0
+include::module-template.adoc[]
+
+//====================================================================================================================
+include::bibliography.adoc[]
+
+//====================================================================================================================
+[[colophon]]
+[colophon]
+== Version History
+
+[cols="1,1,4"]
+|===
+|[small]#{revdate}#  |[small]#{revremark}# |[small]#...#
+|===

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mulesoft.training.REPL_MinimalLCAbbrev_REPL</groupId>
+        <artifactId>solutions-bom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>./bom.xml</relativePath>
+    </parent>
+    <artifactId>solutions-parent-pom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <!-- IMPORTANT: Due to a limitation in MUnit, this file must be installed into the local Maven repo after every change: -->
+    <!-- mvn -f parent-pom.xml install:install-file -Dpackaging=pom -Dfile=parent-pom.xml -DpomFile=parent-pom.xml -->
+    <properties>
+        <!-- about this MuleSoft Training course -->
+        <course.fullName>REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL</course.fullName>
+        <course.shortLCName>REPL_MinimalLCAbbrev_REPL</course.shortLCName>
+        <course.inceptionYear>2015</course.inceptionYear>
+        <!-- required for license-maven-plugin: absolute path of directory in which this file is located -->
+        <buildRootDir>${project.basedir}</buildRootDir>
+        <!-- by default skip running MUnit tests, important for Studio -->
+        <munit.skip>true</munit.skip>
+        <!-- the layers of API-led connectivity, used for assigning layer in Visualizer: must be assigned to api.layer property -->
+        <api.layer.eapi>Experience</api.layer.eapi>
+        <api.layer.papi>Process</api.layer.papi>
+        <api.layer.sapi>System</api.layer.sapi>
+        <api.layer.backend>Backend</api.layer.backend>
+        <api.layer.none>None</api.layer.none>
+        <!-- for automated deployments -->
+        <deployment.env>set with -Ddeployment.env=...</deployment.env>
+        <deployment.prefix>tng${course.shortLCName}-</deployment.prefix>
+        <deployment.suffix>-${deployment.env}</deployment.suffix>
+        <deployment.name>${deployment.prefix}${project.artifactId}${deployment.suffix}</deployment.name>
+        <!-- 2 minutes per attempt (to check if app has started) times 10 attempts (10 is hard-coded) = 2*60*1000*10 = 1200000 -->
+        <deployment.timeoutMillis>1200000</deployment.timeoutMillis>
+        <!-- for automated deployments via ARM -->
+        <ap.uri>https://anypoint.mulesoft.com</ap.uri>
+        <!-- master\subOrg1\subOrg2 -->
+        <ap.businessGroup/>
+        <!-- requires AP environments to have the same name as the env property value in Mule apps (which determines the property files to load) -->
+        <ap.environment>${deployment.env}</ap.environment>
+        <!-- for automated deployments to CH -->
+        <!-- http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions -->
+        <!-- us-east-1, us-east-2, us-west-1, us-west-2, eu-west-1, eu-west-2, eu-central-1, ... -->
+        <ap.region>us-east-1</ap.region>
+        <ch.workers>2</ch.workers>
+        <!-- MICRO (0.1 vCores), SMALL (0.2 vCores), MEDIUM (1 vCore), LARGE (2 vCores), ... -->
+        <ch.workerType>MICRO</ch.workerType>
+        <!-- for API autodiscovery -->
+        <ap.client_id>set with -Dap.client_id=...</ap.client_id>
+        <ap.client_secret>set with -Dap.client_secret=...</ap.client_secret>
+        <!-- set encrypt.key for decrypting secure (encryped) properties files (but don't set it here!) -->
+    </properties>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <!-- and must exclude some file types from filtering in maven-resources-plugin config below -->
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <!-- and must exclude some file types from filtering in maven-resources-plugin config below -->
+            </testResource>
+            <testResource>
+                <directory>src/test/funmon</directory>
+                <filtering>true</filtering>
+                <targetPath>funmon</targetPath>
+            </testResource>
+        </testResources>
+        <pluginManagement>
+            <plugins>
+                <!-- allow resource files to contain references to Maven properties like ${prop.name} -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <nonFilteredFileExtensions>
+                            <!-- exclude all binary files from filtering! -->
+                            <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>crt</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pem</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
+                    </configuration>
+                </plugin>
+                <!-- to be able to build and package Mule apps and domains and to deploy Mule apps to CH -->
+                <plugin>
+                    <groupId>org.mule.tools.maven</groupId>
+                    <artifactId>mule-maven-plugin</artifactId>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <attachMuleSources>true</attachMuleSources>
+                        <cloudHubDeployment>
+                            <uri>${ap.uri}</uri>
+                            <server>cloudhub</server>
+                            <businessGroup>${ap.businessGroup}</businessGroup>
+                            <environment>${ap.environment}</environment>
+                            <region>${ap.region}</region>
+                            <muleVersion>${app.runtime.semver}</muleVersion>
+                            <applyLatestRuntimePatch>true</applyLatestRuntimePatch>
+                            <workers>${ch.workers}</workers>
+                            <workerType>${ch.workerType}</workerType>
+                            <objectStoreV2>true</objectStoreV2>
+                            <persistentQueues>true</persistentQueues>
+                            <applicationName>${deployment.name}</applicationName>
+                            <deploymentTimeout>${deployment.timeoutMillis}</deploymentTimeout>
+                            <properties>
+                                <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+                                <anypoint.platform.visualizer.displayName>${project.artifactId}</anypoint.platform.visualizer.displayName>
+                                <!-- api.layer must be set in every concrete Mule app! -->
+                                <anypoint.platform.visualizer.layer>${api.layer}</anypoint.platform.visualizer.layer>
+                                <env>${deployment.env}</env>
+                                <encrypt.key>${encrypt.key}</encrypt.key>
+                                <anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
+                                <anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
+                                <!-- concrete Mule apps can provide their own props which will be merged with the props given here -->
+                            </properties>
+                        </cloudHubDeployment>
+                    </configuration>
+                </plugin>
+                <!-- to be able to run MUnit tests -->
+                <plugin>
+                    <groupId>com.mulesoft.munit.tools</groupId>
+                    <artifactId>munit-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>test</goal>
+                                <goal>coverage-report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skipMunitTests>${munit.skip}</skipMunitTests>
+                        <runtimeVersion>${app.runtime}</runtimeVersion>
+                        <runtimeProduct>MULE_EE</runtimeProduct>
+                        <environmentVariables>
+                            <!-- this implies that all tests run in the same Maven build must use the same encrypt.key -->
+                            <encrypt.key>${encrypt.key}</encrypt.key>
+                        </environmentVariables>
+                        <coverage>
+                            <runCoverage>true</runCoverage>
+                            <failBuild>true</failBuild>
+                            <!-- TODO: set achievable coverage limits: -->
+                            <requiredApplicationCoverage>0</requiredApplicationCoverage>
+                            <requiredResourceCoverage>0</requiredResourceCoverage>
+                            <requiredFlowCoverage>0</requiredFlowCoverage>
+                            <formats>
+                                <format>console</format>
+                                <format>html</format>
+                            </formats>
+                        </coverage>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <!-- must segregate license-maven-plugin into profile otherwise Studio gets confused -->
+            <id>license</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <configuration>
+                            <skipUpdateLicense>false</skipUpdateLicense>
+                            <skipUpdateProjectLicense>false</skipUpdateProjectLicense>
+                            <skipRemoveLicense>false</skipRemoveLicense>
+                            <licenseName>cc_by_nc_nd_4_0</licenseName>
+                            <licenseResolver>file:${buildRootDir}/src/license</licenseResolver>
+                            <descriptionTemplate>${buildRootDir}/src/license/fileDescriptionTemplate.ftl</descriptionTemplate>
+                            <canUpdateCopyright>true</canUpdateCopyright>
+                            <canUpdateDescription>true</canUpdateDescription>
+                            <canUpdateLicense>true</canUpdateLicense>
+                            <emptyLineAfterHeader>false</emptyLineAfterHeader>
+                            <copyrightOwners>MuleSoft, Inc. All rights reserved. http://www.mulesoft.com</copyrightOwners>
+                            <organizationName>MuleSoft Training</organizationName>
+                            <projectName>${course.fullName}</projectName>
+                            <inceptionYear>${course.inceptionYear}</inceptionYear>
+                            <verbose>false</verbose>
+                            <extraExtensions>
+                                <yaml>properties</yaml>
+                                <!-- don't include RAML as YAML because must start with #%RAML 1.0 rather than license header -->
+                                <dwl>java</dwl>
+                                <wsdl>xml</wsdl>
+                                <xsd>xml</xsd>
+                            </extraExtensions>
+                            <excludes>
+                                <exclude>**/*.json</exclude>
+                                <!-- must prevent from adding non-JSON license header -->
+                                <exclude>**/*.txt</exclude>
+                                <exclude>**/*.sql</exclude>
+                                <exclude>**/*.adoc</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <!-- adds license header to every file with a supported extension -->
+                                <id>first</id>
+                                <goals>
+                                    <goal>update-file-header</goal>
+                                </goals>
+                                <!-- has to be bound to a phase that the Mule Maven plugin is not bound to: using clean instead of process-sources -->
+                                <phase>clean</phase>
+                            </execution>
+                            <execution>
+                                <!-- adds LICENSE.txt to every project root (but not at the very top where this file is) -->
+                                <id>second</id>
+                                <goals>
+                                    <goal>update-project-license</goal>
+                                </goals>
+                                <!-- has to be bound to a phase that the Mule Maven plugin is not bound to: using clean instead of process-resources -->
+                                <phase>clean</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- following above examples to segregate xml-format-maven-plugin into profile so that Studio does not get confused -->
+            <id>format</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>au.com.acegi</groupId>
+                        <artifactId>xml-format-maven-plugin</artifactId>
+                        <configuration>
+                            <attributeQuoteChar>"</attributeQuoteChar>
+                            <!-- it follows from the above that DW expressions within XML attributes must only use ' (single quotes)! -->
+                            <encoding>UTF-8</encoding>
+                            <indentSize>4</indentSize>
+                            <lineEnding>LF</lineEnding>
+                            <newLineAfterDeclaration>false</newLineAfterDeclaration>
+                            <newLineAfterNTags>1</newLineAfterNTags>
+                            <newlines>true</newlines>
+                            <trimText>true</trimText>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>xml-format</id>
+                                <goals>
+                                    <goal>xml-format</goal>
+                                </goals>
+                                <phase>process-sources</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <!-- don't define any dependencies -->
+    <dependencies/>
+</project>

@@ -1,0 +1,105 @@
+name: Attach Assets to Release
+
+#
+# Release automation workflow that runs on a GitHub Release having been created and published.
+# Creates all additional release assets by invoking scripts in the release directory of this repo
+# and attaches these assets to the GitHub Release that triggered this workflow.
+#
+
+on:
+  release:
+    types:
+      - published
+
+env:
+  BASE_DIR:     release
+  ASSETS_DIR:   release/assets
+  ENC_KEY:      ${{ secrets.ENCRYPT_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  create-attach:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v2
+      - name: Set up JDK 1.8 and Maven
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Create settings.xml with credentials from GitHub secrets
+        run: ./solutions/etc/create-settings-xml-from-template.sh "$EE_UNAME" "$EE_PASSW" "$CH_UNAME" "$CH_PASSW"
+        env:
+          EE_UNAME: ${{ secrets.RELEASES_EE_USERNAME }}
+          EE_PASSW: ${{ secrets.RELEASES_EE_PASSWORD }}
+          # no deployments to CH done, so no need for these credentials:
+          CH_UNAME: unused
+          CH_PASSW: unused
+      # Get Release
+      - name: Get current GitHub Release
+        id: get-release
+        uses: bruceadams/get-release@v1.2.0
+      # Create answer references asset and attach it
+      - name: Create answer references asset
+        working-directory: ${{ env.BASE_DIR }}
+        # the create scripts writes logs to stdout: keep showing those by redirecting to stderr
+        # and it writes the asset filename to stderr: assign that to a var by redirecting to stdout
+        # the file descriptor redirection swaps stderr and stdout
+        # finally use a GitHub Actions workflow command to set env var ANSWER_REFS for subsequent steps
+        run: |
+          asset=$(./create-answer-references-asset.sh "$ENC_KEY" 3>&1 1>&2 2>&3)
+          echo "ANSWER_REFS=$asset" >> $GITHUB_ENV
+      - name: Attach answer references asset to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url:         ${{ steps.get-release.outputs.upload_url }}
+          asset_path:         ${{ env.ASSETS_DIR }}/${{ env.ANSWER_REFS }}
+          asset_name:         ${{ env.ANSWER_REFS }}
+          asset_content_type: application/zip
+      # Create correct answers asset and attach it
+      - name: Create correct answers asset
+        working-directory: ${{ env.BASE_DIR }}
+        # same file descriptor redirection and workflow command as above
+        run: |
+          asset=$(./create-correct-answers-asset.sh 3>&1 1>&2 2>&3)
+          echo "CORRECT_ANSWERS=$asset" >> $GITHUB_ENV
+      - name: Attach correct answers asset to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url:         ${{ steps.get-release.outputs.upload_url }}
+          asset_path:         ${{ env.ASSETS_DIR }}/${{ env.CORRECT_ANSWERS }}
+          asset_name:         ${{ env.CORRECT_ANSWERS }}
+          asset_content_type: text/plain
+      # Create student manual asset and attach it
+      - name: Create student manual asset
+        working-directory: ${{ env.BASE_DIR }}
+        # same file descriptor redirection and workflow command as above
+        run: |
+          asset=$(./create-student-manual-asset.sh 3>&1 1>&2 2>&3)
+          echo "STUDENT_MANUAL=$asset" >> $GITHUB_ENV
+      - name: Attach student manual asset to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url:         ${{ steps.get-release.outputs.upload_url }}
+          asset_path:         ${{ env.ASSETS_DIR }}/${{ env.STUDENT_MANUAL }}
+          asset_name:         ${{ env.STUDENT_MANUAL }}
+          asset_content_type: application/pdf
+      # Create student files asset and attach it
+      - name: Create student files asset
+        working-directory: ${{ env.BASE_DIR }}
+        # same file descriptor redirection and workflow command as above
+        run: |
+          asset=$(./create-student-files-asset.sh "$ENC_KEY" 3>&1 1>&2 2>&3)
+          echo "STUDENT_FILES=$asset" >> $GITHUB_ENV
+      - name: Attach student files asset to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url:         ${{ steps.get-release.outputs.upload_url }}
+          asset_path:         ${{ env.ASSETS_DIR }}/${{ env.STUDENT_FILES }}
+          asset_name:         ${{ env.STUDENT_FILES }}
+          asset_content_type: application/zip

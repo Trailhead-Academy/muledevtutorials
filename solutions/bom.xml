@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com
+  
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mulesoft.training.REPL_MinimalLCAbbrev_REPL</groupId>
+    <artifactId>solutions-bom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <!-- IMPORTANT: Due to a limitation in MUnit, this file must be installed into the local Maven repo after every change: -->
+    <!-- mvn -f bom.xml install:install-file -Dpackaging=pom -Dfile=bom.xml -DpomFile=bom.xml -->
+    <organization>
+        <name>MuleSoft Training</name>
+        <url>https://training.mulesoft.com/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License</name>
+            <url>https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Java version -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- generic Maven-related versions -->
+        <maven.min.version>3.5.4</maven.min.version>
+        <maven.max.version>4.0.0</maven.max.version>
+        <clean.plugin.version>3.1.0</clean.plugin.version>
+        <deploy.plugin.version>3.0.0-M2</deploy.plugin.version>
+        <install.plugin.version>3.0.0-M1</install.plugin.version>
+        <site.plugin.version>3.10.0</site.plugin.version>
+        <resources.plugin.version>3.2.0</resources.plugin.version>
+        <versions.plugin.version>2.9.0</versions.plugin.version>
+        <enforcer.plugin.version>3.0.0</enforcer.plugin.version>
+        <license.plugin.version>2.0.0</license.plugin.version>
+        <xml.format.plugin.version>3.2.0</xml.format.plugin.version>
+        <!-- Mule-related versions -->
+        <app.runtime.semver>4.4.0</app.runtime.semver>
+        <app.runtime.suffix>-20211227</app.runtime.suffix>
+        <app.runtime>${app.runtime.semver}${app.runtime.suffix}</app.runtime>
+        <mule.maven.plugin.version>3.5.3</mule.maven.plugin.version>
+        <munit.version>2.3.8</munit.version>
+        <weave.assertions.version>1.0.6</weave.assertions.version>
+        <apikit.version>1.5.8</apikit.version>
+        <secure.conf.prop.module.version>1.2.3</secure.conf.prop.module.version>
+        <validation.module.version>1.4.5</validation.module.version>
+        <scripting.module.version>2.0.0</scripting.module.version>
+        <http.connector.version>1.6.0</http.connector.version>
+        <sockets.connector.version>1.2.2</sockets.connector.version>
+        <db.connector.version>1.11.2</db.connector.version>
+        <objectstore.connector.version>1.2.1</objectstore.connector.version>
+        <vm.connector.version>2.0.0</vm.connector.version>
+        <file.connector.version>1.3.4</file.connector.version>
+        <!-- 3rd party lib versions -->
+        <mysql.version>8.0.28</mysql.version>
+        <!-- versions and properties related to project artifacts: -->
+    </properties>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Mule-related Maven plugins -->
+                <plugin>
+                    <groupId>org.mule.tools.maven</groupId>
+                    <artifactId>mule-maven-plugin</artifactId>
+                    <version>${mule.maven.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.mulesoft.munit.tools</groupId>
+                    <artifactId>munit-maven-plugin</artifactId>
+                    <version>${munit.version}</version>
+                </plugin>
+                <!-- generic Maven plugins -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${clean.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${deploy.plugin.version}</version>
+                </plugin>
+                <!-- if maven-install-plugin is managed here it causes some Mule projects to fail -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${site.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${resources.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${license.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${versions.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${enforcer.plugin.version}</version>
+                    <configuration>
+                        <rules>
+                            <requireMavenVersion>
+                                <version>[${maven.min.version},${maven.max.version})</version>
+                            </requireMavenVersion>
+                        </rules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>au.com.acegi</groupId>
+                    <artifactId>xml-format-maven-plugin</artifactId>
+                    <version>${xml.format.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <!-- define plugin executions that enforce and manage Maven and dependency versions -->
+            <!-- normally, any plugin executions belong into parent-pom.xml, but this is an exception -->
+            <!-- must segregate versions-maven-plugin into profile otherwise Studio gets confused -->
+            <id>versions</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- management of maven-install-plugin must be segregated here or it causes some Mule projects to fail -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-install-plugin</artifactId>
+                            <version>${install.plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <configuration>
+                            <rulesUri>file:maven-version-rules.xml</rulesUri>
+                        </configuration>
+                    </plugin>
+                    <!-- required by versions-maven-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-maven</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <!-- declare the version (not the dependency itself!) of each dependency of each Mule app: -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- the Mule runtime itself: this is only to get the Maven versions plugin to announce available updates to the Mule runtime -->
+            <dependency>
+                <groupId>com.mulesoft.mule.distributions</groupId>
+                <artifactId>mule-runtime-impl-bom</artifactId>
+                <version>${app.runtime}</version>
+                <type>pom</type>
+                <scope>provided</scope>
+            </dependency>
+            <!-- standard Mule dependencies: MUnit -->
+            <dependency>
+                <groupId>com.mulesoft.munit</groupId>
+                <artifactId>munit-runner</artifactId>
+                <version>${munit.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>com.mulesoft.munit</groupId>
+                <artifactId>munit-tools</artifactId>
+                <version>${munit.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.weave</groupId>
+                <artifactId>assertions</artifactId>
+                <version>${weave.assertions.version}</version>
+            </dependency>
+            <!-- standard Mule dependencies: modules -->
+            <dependency>
+                <groupId>org.mule.modules</groupId>
+                <artifactId>mule-apikit-module</artifactId>
+                <version>${apikit.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>com.mulesoft.modules</groupId>
+                <artifactId>mule-secure-configuration-property-module</artifactId>
+                <version>${secure.conf.prop.module.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.modules</groupId>
+                <artifactId>mule-validation-module</artifactId>
+                <version>${validation.module.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.modules</groupId>
+                <artifactId>mule-scripting-module</artifactId>
+                <version>${scripting.module.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <!-- standard Mule dependencies: connectors -->
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-http-connector</artifactId>
+                <version>${http.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-sockets-connector</artifactId>
+                <version>${sockets.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-db-connector</artifactId>
+                <version>${db.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-objectstore-connector</artifactId>
+                <version>${objectstore.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-vm-connector</artifactId>
+                <version>${vm.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.mule.connectors</groupId>
+                <artifactId>mule-file-connector</artifactId>
+                <version>${file.connector.version}</version>
+                <classifier>mule-plugin</classifier>
+            </dependency>
+            <!-- 3rd party lib versions -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- dependencies provided by this project -->
+        </dependencies>
+    </dependencyManagement>
+    <repositories>
+        <repository>
+            <!-- MuleSoft repository for publicly accessible artifacts, does not require authentication -->
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+        </repository>
+        <repository>
+            <!-- MuleSoft repository for artifacts related to Mule runtime EE, requires authentication -->
+            <id>releases-ee</id>
+            <name>Mule Release Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/releases-ee/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <!-- required by MUnit Maven plugin even just for MUnit-testing with the EE runtime -->
+            <id>releases-ee</id>
+            <name>Mule Release Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/releases-ee/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
