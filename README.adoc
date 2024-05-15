@@ -1,6 +1,6 @@
-= REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL
+= MuleSoft Developer Community Tutorials
 
-Monorepo containing all material for *REPL_OfficialNameFirstHalf_REPL: REPL_OfficialNameSecondHalf_REPL* (aka REPL_OfficialAbbrev_REPL) that can reasonably be maintained in a Git repo.
+Monorepo containing all material for *MuleSoft Developer Community Tutorials* (aka REPL_OfficialAbbrev_REPL) that can reasonably be maintained in a Git repo.
 
 image:https://github.com/mulesoft-consulting/training-template/workflows/Detect%20Dependency%20Updates/badge.svg[]
 image:https://github.com/mulesoft-consulting/training-template/workflows/CI%20Solutions/badge.svg[]
